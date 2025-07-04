@@ -1,6 +1,6 @@
 # Zoho CRM MCP Server for Claude.ai
 
-A Model Context Protocol (MCP) server that connects Claude.ai to Zoho CRM, enabling seamless interaction with your CRM data through natural language queries.
+An integration that connects Claude.ai to Zoho CRM, enabling seamless interaction with your CRM data through natural language queries. Uses the Model Context Protocol (MCP)
 
 ## Features
 
@@ -9,6 +9,7 @@ A Model Context Protocol (MCP) server that connects Claude.ai to Zoho CRM, enabl
 - **Search Records**: Search across CRM records using natural language
 - **Get Records**: Fetch specific records by ID
 - **OAuth Authentication**: Secure connection using Zoho OAuth 2.0
+- **More in Development**: more features coming 2025
 
 ## Part 1 - Prerequisites
 
@@ -49,20 +50,18 @@ Before installing this MCP server, ensure you have the following installed on yo
 ### Step 1: Clone and Build Docker Image
 
 1. **Clone the Repository**
-   Alternatively you can just download the repo
-   ```bash
-   git clone https://github.com/whiteside-daniel/zohocrm-mcpserver.git
-   cd zohocrm-mcpserver
+   
+   AMD/Intel chip:
    ```
-
-2. **Build the Docker Image**
-   ```bash
-   docker build -t zoho-mcp .
+   docker pull whiteside1992daniel/zohocrm-mcpserver:amd64
    ```
-
-3. **Verify the Image**
+   Apple Silicon/M-Series
+   ```
+   docker pull whiteside1992daniel/zohocrm-mcpserver:amd64
+   ```
+2. **Verify the Image (Optional)**
    ```bash
-   docker images | grep zoho-mcp
+   docker images | grep whiteside1992daniel/zohocrm-mcpserver
    ```
 
 ### Step 2: Configure Claude Desktop
@@ -87,7 +86,7 @@ Before installing this MCP server, ensure you have the following installed on yo
             "-e", "ZOHO_CLIENT_ID",
             "-e", "ZOHO_CLIENT_SECRET",
             "-e", "SCOPES",
-            "zoho-mcp"
+            "whiteside1992daniel/zohocrm-mcpserver:YOURVERSION"
           ],
           "env": {
             "ZOHO_CLIENT_ID" : "YOURCLIENTID",
@@ -103,6 +102,7 @@ Before installing this MCP server, ensure you have the following installed on yo
    **Replace the placeholder values:**
    - `your_zoho_client_id` - Your actual Zoho Client ID
    - `your_zoho_client_secret` - Your actual Zoho Client Secret
+   - `whiteside1992daniel/zohocrm-mcpserver:YOURVERSION` - Your version depending on your silicon
 
 3. **Restart Claude Desktop**
    - Close Claude Desktop completely
