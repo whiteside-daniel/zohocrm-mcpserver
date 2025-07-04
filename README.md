@@ -10,18 +10,25 @@ A Model Context Protocol (MCP) server that connects Claude.ai to Zoho CRM, enabl
 - **Get Records**: Fetch specific records by ID
 - **OAuth Authentication**: Secure connection using Zoho OAuth 2.0
 
-## Prerequisites
+## Part 1 - Prerequisites
 
 Before installing this MCP server, ensure you have the following installed on your system:
 
 ### Required Software
 
+1. **node.js and npm**
+   - **Windows/Mac**: Download offial installer at nodejs.org
+   - **Linux**: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash` then `nvm install node`
+   - Verify installation: `node --version`
+   
 1. **Docker or Docker Desktop**
    - **Windows/Mac**: Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
    - **Linux**: Install Docker Engine following the [official guide](https://docs.docker.com/engine/install/)
    - Verify installation: `docker --version`
 
-2. **Git**
+### Optional Software
+
+1. **Git**
    - Download from [git-scm.com](https://git-scm.com/)
    - Verify installation: `git --version`
 
@@ -37,7 +44,7 @@ Before installing this MCP server, ensure you have the following installed on yo
    - Note down your `Client ID` and `Client Secret`
    - Set redirect URI to: `http://localhost:3000/authRedirect`
 
-## Installation
+## Part 2 - Installation
 
 ### Step 1: Clone and Build Docker Image
 
@@ -102,10 +109,10 @@ Before installing this MCP server, ensure you have the following installed on yo
    - Reopen Claude Desktop
    - The MCP server will be automatically started when needed
 
-## Authentication Setup
+## Part 3 - Authentication Setup
 
 1. **Initiate OAuth Flow**
-   - In Claude, use the "authorize-zoho" tool or ask it to connect to Zoho
+   - In Claude, prompt it to connect to Zoho
    - This will provide an authorization URL
    - Copy and open the URL in your browser
 
