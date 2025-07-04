@@ -51,7 +51,7 @@ Before installing this MCP server, ensure you have the following installed on yo
 1. **Clone the Repository**
    Alternatively you can just download the repo
    ```bash
-   git clone <your-repository-url>
+   git clone https://github.com/whiteside-daniel/zohocrm-mcpserver.git
    cd zohocrm-mcpserver
    ```
 
