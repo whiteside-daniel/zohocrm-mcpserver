@@ -1,17 +1,16 @@
 # Zoho CRM MCP Server for Claude.ai
 
-An integration that connects Claude.ai to Zoho CRM, enabling seamless interaction with your CRM data through natural language queries. Uses the Model Context Protocol (MCP)
+An integration that connects Claude.ai to Zoho CRM, enabling seamless interaction with your CRM data through natural language queries. Uses the Model Context Protocol (MCP). Uses Zoho Oauth for a secure connection. 
 
 ## Features
 
 - **List Modules**: Get all available CRM modules and their API names
 - **Field Information**: Retrieve field details for any CRM module
 - **Search Records**: Search across CRM records using natural language
-- **Get Records**: Fetch specific records by ID
-- **OAuth Authentication**: Secure connection using Zoho OAuth 2.0
+- **Get Records**: Fetch specific records
 - **More in Development**: more features coming 2025
 
-## Part 1 - Prerequisites
+# Prerequisites
 
 Before installing this MCP server, ensure you have the following installed on your system:
 
@@ -27,38 +26,34 @@ Before installing this MCP server, ensure you have the following installed on yo
    - **Linux**: Install Docker Engine following the [official guide](https://docs.docker.com/engine/install/)
    - Verify installation: `docker --version`
 
-### Optional Software
-
-1. **Git**
-   - Download from [git-scm.com](https://git-scm.com/)
-   - Verify installation: `git --version`
-
 ### Zoho CRM Setup
 
-1. **Zoho CRM Account**
+1. **Admin Access for Zoho CRM Account**
    - Active Zoho CRM subscription
    - Administrator access to create OAuth applications
 
-2. **Zoho OAuth Application**
+2. **Create Zoho OAuth ID and Secret**
    - Go to [Zoho Developer Console](https://api-console.zoho.com/)
    - Create a new "Self Client" application
-   - Note down your `Client ID` and `Client Secret`
    - Set redirect URI to: `http://localhost:3000/authRedirect`
+   - Note down your `Client ID` and `Client Secret`
 
-## Part 2 - Installation
+# Installation
 
 ### Step 1: Clone and Build Docker Image
 
-1. **Clone the Repository**
+1. **Clone the App Image**
    
-   AMD/Intel chip:
-   ```
-   docker pull whiteside1992daniel/zohocrm-mcpserver:amd64
-   ```
-   Apple Silicon/M-Series
-   ```
-   docker pull whiteside1992daniel/zohocrm-mcpserver:amd64
-   ```
+   In your terminal window, in any folder: 
+   
+       AMD/Intel chip:
+       ```
+       docker pull whiteside1992daniel/zohocrm-mcpserver:amd64
+       ```
+       Apple Silicon/M-Series
+       ```
+       docker pull whiteside1992daniel/zohocrm-mcpserver:m3
+       ```
 2. **Verify the Image (Optional)**
    ```bash
    docker images | grep whiteside1992daniel/zohocrm-mcpserver
@@ -110,7 +105,7 @@ Before installing this MCP server, ensure you have the following installed on yo
    - The MCP server will be automatically started when needed
 
 
-## Integration Details - Available Tools
+# Appendix - Available Tools
 
 | Tool Name | Description | Parameters |
 |-----------|-------------|------------|
@@ -140,7 +135,7 @@ Search for accounts containing "Microsoft"
 Get the contact record with ID 1234567890
 ```
 
-## Troubleshooting
+# Appendix - Troubleshooting
 
 ### Common Issues
 
@@ -196,32 +191,7 @@ Get the contact record with ID 1234567890
    docker logs <container_id>
    ```
 
-## Updates and Maintenance
-
-### Updating the Server
-
-1. **Pull Latest Changes**
-   ```bash
-   git pull origin main
-   ```
-
-2. **Rebuild Docker Image**
-   ```bash
-   docker build -t zoho-mcp-server .
-   ```
-
-3. **Restart Claude Desktop**
-   - Close and reopen Claude Desktop
-   - The new image will be used automatically
-
-### Token Management
-
-The server automatically handles token refresh. If you encounter auth issues:
-
-1. Re-run the authorization process using the "authorize-zoho" tool
-2. Restart Claude Desktop
-
-## Testing the Installation
+# Appendix - Testing the Installation
 
 1. **Verify Docker Image**
    ```bash
@@ -238,11 +208,11 @@ The server automatically handles token refresh. If you encounter auth issues:
    - Complete the authorization in your browser
    - Try searching for records
 
-## License
+# License
 
 This project is licensed under the ISC License.
 
-## Contributing
+# Contributing
 
 1. Fork the repository
 2. Create a feature branch
