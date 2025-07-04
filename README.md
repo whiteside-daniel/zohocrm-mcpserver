@@ -46,14 +46,14 @@ Before installing this MCP server, ensure you have the following installed on yo
    
    In your terminal window, in any folder: 
    
-       AMD/Intel chip:
-       ```
-       docker pull whiteside1992daniel/zohocrm-mcpserver:amd64
-       ```
-       Apple Silicon/M-Series
-       ```
-       docker pull whiteside1992daniel/zohocrm-mcpserver:m3
-       ```
+   AMD/Intel chips:
+   ```
+   docker pull whiteside1992daniel/zohocrm-mcpserver:amd64
+   ```
+   Apple Silicon/M-Series chips:
+   ```
+   docker pull whiteside1992daniel/zohocrm-mcpserver:m3
+   ```
 2. **Verify the Image (Optional)**
    ```bash
    docker images | grep whiteside1992daniel/zohocrm-mcpserver
@@ -61,6 +61,7 @@ Before installing this MCP server, ensure you have the following installed on yo
 
 ### Step 2: Configure Claude Desktop
 
+Now you need to make a modification to your Claude config file to tell Claude how to connect to the MCP Server.
 1. **Locate Claude Desktop Config File**
    - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
    - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json` (show hidden files on Mac by doing Shift + Option + Period)
@@ -95,9 +96,9 @@ Before installing this MCP server, ensure you have the following installed on yo
    ```
 
    **Replace the placeholder values:**
-   - `your_zoho_client_id` - Your actual Zoho Client ID
-   - `your_zoho_client_secret` - Your actual Zoho Client Secret
-   - `whiteside1992daniel/zohocrm-mcpserver:YOURVERSION` - Your version depending on your silicon
+   - ZOHO_CLIENT_ID : `YOURCLIENTID` - Your actual Zoho Client ID
+   - ZOHO_CLIENT_SECRET : `YOURCLIENTSECRET` - Your actual Zoho Client Secret
+   - SCOPES : whiteside1992daniel/zohocrm-mcpserver:`YOURVERSION` - Your version depending on your silicon [amd64 || m3]
 
 3. **Restart Claude Desktop**
    - Close Claude Desktop completely
