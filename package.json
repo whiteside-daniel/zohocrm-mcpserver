@@ -1,0 +1,23 @@
+{
+  "name": "zoho-mcp",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "go": "concurrently \"node index.js\" \"node express.js\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.14.0",
+    "axios": "^1.10.0",
+    "concurrently": "^9.2.0",
+    "express": "^5.1.0",
+    "zod": "^3.25.71"
+  },
+  "devDependencies": {
+    "dotenv": "^17.0.1"
+  }
+}
