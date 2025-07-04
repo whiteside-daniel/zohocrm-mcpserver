@@ -109,24 +109,8 @@ Before installing this MCP server, ensure you have the following installed on yo
    - Reopen Claude Desktop
    - The MCP server will be automatically started when needed
 
-## Part 3 - Authentication Setup
 
-1. **Initiate OAuth Flow**
-   - In Claude, prompt it to connect to Zoho
-   - This will provide an authorization URL
-   - Copy and open the URL in your browser
-
-2. **Complete Authorization**
-   - Log in to your Zoho account
-   - Grant the requested permissions
-   - You'll be redirected to `http://localhost:3000/authRedirect`
-   - The page will show your refresh token
-
-3. **Verify Connection**
-   - Try using the "list-zoho-modules" tool in Claude
-   - You should see a list of your CRM modules
-
-## Available Tools
+## Integration Details - Available Tools
 
 | Tool Name | Description | Parameters |
 |-----------|-------------|------------|
