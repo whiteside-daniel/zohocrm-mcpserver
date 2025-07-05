@@ -23,7 +23,7 @@ export async function getZohoRefreshToken(authCode) {
                 reject(response.data.error);
             }
             else {
-                fs.writeFile('./refreshToken.txt', response.data.refresh_token, (err) => {
+                fs.writeFile('./data/refreshToken.txt', response.data.refresh_token, (err) => {
                 if (err) throw err;
                     //console.error('Token written successfully!');
                 });
@@ -37,7 +37,7 @@ export async function getZohoRefreshToken(authCode) {
 //get a Zoho auth token
 export async function getZohoAccessToken() {
     return new Promise((resolve, reject) => {
-        fs.readFile('./refreshToken.txt', 'utf8', (err, refreshToken) => {
+        fs.readFile('./data/refreshToken.txt', 'utf8', (err, refreshToken) => {
             if (err) {
                 console.error('No file found: ', err);
                 reject(err);

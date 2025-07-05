@@ -63,26 +63,19 @@ Before installing this MCP server, ensure you have the following installed on yo
 
 Now you need to make a modification to your Claude config file to tell Claude how to connect to the MCP Server.
 1. **Locate Claude Desktop Config File**
-   - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-   - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json` (show hidden files on Mac by doing Shift + Option + Period)
-   - **Linux**: `~/.config/Claude/claude_desktop_config.json`
+You can open Claude Desktop and go to Preferences -> Developer -> Edit Config. This should open the file `claude_desktop_config.js`.
 
 2. **Add MCP Server Configuration**
    
-   Edit the `claude_desktop_config.json` file and add:
+   Edit the `claude_desktop_config.json` file in a code or text editor and add the following configurations:
    ```json
    {
      "mcpServers": {
        "zohocrm-mcp-connector": {
-          "command": "docker",
+          "command": "sh",
           "args": [
-            "run", "--rm",
-            "-i", "--name", "zoho-mcp-server",
-            "-p", "3000:3000",
-            "-e", "ZOHO_CLIENT_ID",
-            "-e", "ZOHO_CLIENT_SECRET",
-            "-e", "SCOPES",
-            "whiteside1992daniel/zohocrm-mcpserver:YOURVERSION"
+            "-c",
+            "docker run --rm -i --name zoho-mcp-server -p 3000:3000 -e ZOHO_CLIENT_ID -e ZOHO_CLIENT_SECRET -e SCOPES whiteside1992daniel/zohocrm-mcpserver:m3"
           ],
           "env": {
             "ZOHO_CLIENT_ID" : "YOURCLIENTID",
@@ -94,11 +87,12 @@ Now you need to make a modification to your Claude config file to tell Claude ho
      }
    }
    ```
-
+   This configuration is telling Claude to launch a docker container hosting the MCP server whenever the application starts. 
+   
    **Replace the placeholder values:**
    - ZOHO_CLIENT_ID : `YOURCLIENTID` - Your actual Zoho Client ID
    - ZOHO_CLIENT_SECRET : `YOURCLIENTSECRET` - Your actual Zoho Client Secret
-   - SCOPES : whiteside1992daniel/zohocrm-mcpserver:`YOURVERSION` - Your version depending on your silicon [amd64 || m3]
+   - SCOPES : whiteside1992daniel/zohocrm-mcpserver:`VERSION` - Your version depending on your silicon [amd64 || m3]
 
 3. **Restart Claude Desktop**
    - Close Claude Desktop completely
@@ -134,11 +128,13 @@ Search for accounts containing "Microsoft"
 ```
 
 ```
-Get the contact record with ID 1234567890
+Get the most recent Prospect located in Omaha, Nebraska
 ```
 
 # Appendix - Troubleshooting
 
+### Error Logging
+Application logs can be found by going to Claude -> Preferences -> Developer. When there is an error there will be an option to open the error logs. Check the logs to see if the servers started and if Claude is able to communicate with them. 
 ### Common Issues
 
 1. **MCP Server Not Starting**
