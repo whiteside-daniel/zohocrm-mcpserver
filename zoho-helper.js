@@ -10,10 +10,10 @@ class ZohoHeader {
 }
 //get a refresh token
 export async function getZohoRefreshToken(authCode) {
-    //console.log('trying to get refresh token now. AuthCode: ' + authCode);
+    //console.error('trying to get refresh token now. AuthCode: ' + authCode);
     return new Promise((resolve, reject) => {
         const url = `https://accounts.zoho.com/oauth/v2/token?code=${authCode}&redirect_uri=http://localhost:3000/authRedirect&client_id=${process.env.ZOHO_CLIENT_ID}&client_secret=${process.env.ZOHO_CLIENT_SECRET}&grant_type=authorization_code`;
-        //console.log('trying ' + url);
+        //console.error('trying ' + url);
         axios({
             method: 'POST',
             url: url
@@ -25,7 +25,7 @@ export async function getZohoRefreshToken(authCode) {
             else {
                 fs.writeFile('./refreshToken.txt', response.data.refresh_token, (err) => {
                 if (err) throw err;
-                    //console.log('Token written successfully!');
+                    //console.error('Token written successfully!');
                 });
                 resolve(response.data.refresh_token);
             }
@@ -42,14 +42,14 @@ export async function getZohoAccessToken() {
                 console.error('No file found: ', err);
                 reject(err);
             }
-            //console.log('File content:', refreshToken);
+            //console.error('File content:', refreshToken);
             const accessTokenURL = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${refreshToken}&client_id=${process.env.ZOHO_CLIENT_ID}&client_secret=${process.env.ZOHO_CLIENT_SECRET}&grant_type=refresh_token`;
 
             try{
-            //console.log(accessTokenURL);
+            //console.error(accessTokenURL);
              axios.post(accessTokenURL, {headers: {'Content-Type' : 'application/json' }})
                 .then(postResponse => {
-                        //console.log(postResponse);
+                        //console.error(postResponse);
                         const accessToken = postResponse.data.access_token;
                         resolve(accessToken);
                 })
@@ -103,7 +103,7 @@ export async function listZohoModules(accessToken) {
             delete mod.plural_label;
             mod.module_type = mod.generated_type;
             delete mod.generated_type;
-            //console.log(mod);
+            //console.error(mod);
         });
         resolve(response.data.modules);
     })
@@ -176,10 +176,10 @@ export async function searchZohoRecords(accessToken, searchModule, searchString)
             url: url,
             headers: authHeaders
         });
-        //console.log(response.data);
+        //console.error(response.data);
         return response.data.data;
     } catch(err) {
-        //console.log(err);
+        //console.error(err);
         return err;
     }
 }

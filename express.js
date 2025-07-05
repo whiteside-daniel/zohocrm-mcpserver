@@ -3,6 +3,10 @@ const app = express();
 const port = 3000;
 import { getZohoRefreshToken } from "./zoho-helper.js";
 
+console.error(`[${new Date().toISOString()}] Express Server - Starting server...`);
+console.error(`[${new Date().toISOString()}] Express Server - Node.js version: ${process.version}`);
+console.error(`[${new Date().toISOString()}] Express Server - Process PID: ${process.pid}`);
+
 //START AN EXPRESS SERVER
 app.get('/authRedirect', (req, res) => {
     const authCode = req.query.code;
@@ -11,18 +15,18 @@ app.get('/authRedirect', (req, res) => {
         .then(token => {
             //console.log('token acquired: ' + token);
             process.env.ZOHO_REFRESH_TOKEN = token;
-            res.send('You can close this page now. Refresh token acquired: ' + process.env.ZOHO_REFRESH_TOKEN);
+            res.send('You can close this page now. Refresh token acquired.');
         })
         .catch(err => {
-            console.log(err);
+            console.error(err);
         });
     } catch(err) {
-        console.log(err);
+        console.error(err);
     }
 });
 
 app.get('/', (req, res) => {
-    res.send('Main Route. You can close this page');
+    res.send('Express Server working. You can close this page');
 });
 
 app.listen(port, () => {

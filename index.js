@@ -8,76 +8,6 @@ import { exec } from "child_process";
 console.error(`[${new Date().toISOString()}] Starting MCP server...`);
 console.error(`[${new Date().toISOString()}] Node.js version: ${process.version}`);
 console.error(`[${new Date().toISOString()}] Process PID: ${process.pid}`);
-//APP CONSTANTS
-const PORT = 80;
-//CREATE EXPRESS LISTENER
-//const app = express();
-//app.use(express.json());
-//app.post('/mcp', async (req, res) => {
-//  // In stateless mode, create a new instance of transport and server for each request
-//  // to ensure complete isolation. A single instance would cause request ID collisions
-//  // when multiple clients connect concurrently.
-//  
-//  try {
-//    const server = getServer(); 
-//    const transport = new StreamableHTTPServerTransport({
-//      sessionIdGenerator: undefined,
-//    });
-//    res.on('close', () => {
-//      //console.log('Request closed');
-//      transport.close();
-//      server.close();
-//    });
-//    await server.connect(transport);
-//    await transport.handleRequest(req, res, req.body);
-//  } catch (error) {
-//    console.error('Error handling MCP request:', error);
-//    if (!res.headersSent) {
-//      res.status(500).json({
-//        jsonrpc: '2.0',
-//        error: {
-//          code: -32603,
-//          message: 'Internal server error',
-//        },
-//        id: null,
-//      });
-//    }
-//  }
-//});
-//
-//// SSE notifications not supported in stateless mode
-//app.get('/mcp', async (req, res) => {
-//  //console.log('Received GET MCP request');
-//  res.writeHead(405).end(JSON.stringify({
-//    jsonrpc: "2.0",
-//    error: {
-//      code: -32000,
-//      message: "Method not allowed."
-//    },
-//    id: null
-//  }));
-//});
-//
-//// Session termination not needed in stateless mode
-//app.delete('/mcp', async (req, res) => {
-//  //console.log('Received DELETE MCP request');
-//  res.writeHead(405).end(JSON.stringify({
-//    jsonrpc: "2.0",
-//    error: {
-//      code: -32000,
-//      message: "Method not allowed."
-//    },
-//    id: null
-//  }));
-//});
-////START EXPRESS SERVER LISTENER
-//app.listen(PORT, (error) => {
-//  if (error) {
-//    console.error('Failed to start server:', error);
-//    process.exit(1);
-//  }
-//  console.error(`MCP Stateless Streamable HTTP Server listening on port ${PORT}`);
-//});
 
 //CREATE MCP SERVER CONFIG
 const server = new McpServer({
@@ -168,41 +98,7 @@ server.registerTool(
   }
 );
 
-// Add a dynamic greeting resource
-server.registerResource(
-  "greeting",
-  new ResourceTemplate("greeting://{name}", { list: undefined }),
-  { 
-    title: "Greeting Resource",      // Display name for UI
-    description: "Dynamic greeting generator"
-  },
-  async (uri, { name }) => ({
-    contents: [{
-      uri: uri.href,
-      text: `Hello, ${name}!`
-    }]
-  })
-);
-
-
-//// Add an addition tool
-//server.registerTool("add",
-//  {
-//    title: "Addition Tool",
-//    description: "Add two numbers",
-//    inputSchema: { a: z.number(), b: z.number() }
-//  },
-//  async ({ a, b }) => ({
-//    content: [{ type: "text", text: String(a + b) }]
-//  })
-//);
-//
-//
-//const token = await getZohoAccessToken();
-//const fieldData = await searchZohoRecords(token, "Accounts", "WFHF");
-//console.log(fieldData);
-// Replace your current event listeners and main code with this:
-// Add server event handlers for debugging
+//DEBUGGING CODE
 server.onrequest = (request) => {
   console.error(`[${new Date().toISOString()}] Server received request:`, JSON.stringify(request));
 };
@@ -236,17 +132,5 @@ async function main() {
     process.exit(1);
   }
 }
-
-// Remove the stdin event listeners that might be interfering
-// Comment out or remove these:
-/*
-process.stdin.on('end', () => {
-  console.error(`[${new Date().toISOString()}] stdin ended`);
-});
-
-process.stdin.on('close', () => {
-  console.error(`[${new Date().toISOString()}] stdin closed`);
-});
-*/
 
 main();

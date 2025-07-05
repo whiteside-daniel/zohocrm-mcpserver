@@ -38,7 +38,7 @@ Before installing this MCP server, ensure you have the following installed on yo
    - Set redirect URI to: `http://localhost:3000/authRedirect`
    - Note down your `Client ID` and `Client Secret`
 
-# Installation
+# Quick Installation
 
 ### Step 1: Clone and Build Docker Image
 
@@ -104,6 +104,7 @@ Now you need to make a modification to your Claude config file to tell Claude ho
    - Close Claude Desktop completely
    - Reopen Claude Desktop
    - The MCP server will be automatically started when needed
+   - Try asking claude "is Zoho MCP is working?" or "help me authorize Zoho MCP Server"
 
 
 # Appendix - Available Tools
