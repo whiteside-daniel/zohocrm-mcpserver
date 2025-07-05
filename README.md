@@ -2,7 +2,7 @@
 
 An integration that connects Claude.ai to Zoho CRM, enabling seamless interaction with your CRM data through natural language queries. Uses the Model Context Protocol (MCP). Uses Zoho Oauth for a secure connection. 
 
-This package is meant to be simple and easy to install. I chose to reduce the amount of installations and packages reuquired to the extent possible by utilizing Docker. If you can install Docker Desktop this is a very simple integration to use.  
+This package is meant to be simple and easy to install. If you can install Docker Desktop, then this is a very simple integration to use!
 
 ## Features
 - **Ready-Only**: To keep your data clean, Claude will be Read-Only with respect to Zoho and cannot modify CRM records
@@ -10,6 +10,7 @@ This package is meant to be simple and easy to install. I chose to reduce the am
 - **Field Information**: Retrieve field details for any CRM module
 - **Search Records**: Search across CRM records using natural language
 - **Get Records**: Fetch a specific record from any module
+- **Count Records**: Get a count of records in a module with a variety of filter options
 - **More in Development**: more features coming 2025
 
 # Prerequisites
@@ -19,7 +20,7 @@ Before installing this MCP server, ensure you have the following installed on yo
 ### Required Software
    
 1. **Docker or Docker Desktop**
-   - **Windows/Mac**: Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+   - **Windows/Mac**: Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/). This automatically installs the Docker Engine under the hood, and makes the Engine easy to use and monitor. 
    - **Linux**: Install Docker Engine following the [official guide](https://docs.docker.com/engine/install/)
    - Verify installation: `docker --version`
 
@@ -80,7 +81,7 @@ You can open Claude Desktop and go to Preferences -> Developer -> Edit Config. T
           "env": {
             "ZOHO_CLIENT_ID" : "YOURCLIENTID",
             "ZOHO_CLIENT_SECRET" : "YOURCLIENTSECRET",
-            "SCOPES" : "ZohoCRM.settings.ALL,ZohoCRM.modules.ALL,ZohoSearch.securesearch.READ",
+            "SCOPES" : "ZohoCRM.settings.READ,ZohoCRM.modules.READ,ZohoSearch.securesearch.READ,ZohoCRM.settings.layouts.READ",
             "NODE_ENV": "production"
           }
         }
@@ -220,7 +221,7 @@ Config for Claude.ai in manual dev mode
       "env": {
         "ZOHO_CLIENT_ID" : "1000.6ZAM3J05ETG46V9ZD1TNSJT7BTZ77A",
         "ZOHO_CLIENT_SECRET" : "d09b76a006701550137cfa72240e804c21f2a69d96",
-        "SCOPES" : "ZohoCRM.settings.ALL,ZohoCRM.modules.ALL,ZohoSearch.securesearch.READ",
+        "SCOPES" : "ZohoCRM.settings.ALL,ZohoCRM.modules.ALL,ZohoSearch.securesearch.READ,ZohoCRM.settings.layouts.READ",
         "NODE_ENV": "development"
       }
     }
