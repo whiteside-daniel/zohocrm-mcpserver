@@ -2,6 +2,8 @@
 
 An integration that connects Claude.ai to Zoho CRM, enabling seamless interaction with your CRM data through natural language queries. Uses the Model Context Protocol (MCP). Uses Zoho Oauth for a secure connection. 
 
+This package is meant to be simple and easy to install. I chose to reduce the amount of installations and packages reuquired to the extent possible by utilizing Docker. If you can install Docker Desktop this is a very simple integration to use.  
+
 ## Features
 - **Ready-Only**: To keep your data clean, Claude will be Read-Only with respect to Zoho and cannot modify CRM records
 - **List Modules**: Get all available CRM modules and their API names

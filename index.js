@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import { McpServer, ResourceTemplate } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
@@ -17,15 +19,33 @@ const server = new McpServer({
 
 //GET REFRESH TOKEN IF ONE DOESN'T EXIST
 server.registerTool(
-  "authorize-zoho",
+  "check-zoho-authorization",
   {
     title: "Authorize Zoho CRM Account",
     description: "Before you can use the other tools, you must authorize your Zoho Account with the proper scopes and permissions. The user must visit this link to authorize Zoho, then get redirected to this application"
   },
-  async () => {
-    return {
-      content: [{type: 'text' , text: `https://accounts.zoho.com/oauth/v2/auth?response_type=code&client_id=${process.env.ZOHO_CLIENT_ID}&scope=${process.env.SCOPES}&redirect_uri=http://localhost:3000/authRedirect&access_type=offline`}]
-    };
+  () => {
+    let filePath = '';
+    if(process.env.NODE_ENV == 'development') {
+      filePath = '/Users/whiteside/Documents/GitHub/zohocrm-mcpserver/data/refreshToken.txt';
+      console.error('development environment filepath');
+    }
+    else {
+      filePath = path.join(process.cwd(), 'data', 'refreshToken.txt');
+      console.error('production environment filepath');
+    }
+
+    if (fs.existsSync(filePath)) {
+      const returnText = "Refresh token found. You should be able to use the other tools and request data from Zoho CRM. Thanks for checking!";
+      return {
+        content: [{type: 'text' , text: returnText }]
+      };
+    } else {
+      const returnText = `https://accounts.zoho.com/oauth/v2/auth?response_type=code&client_id=${process.env.ZOHO_CLIENT_ID}&scope=${process.env.SCOPES}&redirect_uri=http://localhost:3000/authRedirect&access_type=offline`;
+      return {
+        content: [{type: 'text' , text: returnText }]
+      };
+    }
   }
 );
 

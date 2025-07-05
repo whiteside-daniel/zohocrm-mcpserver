@@ -1,19 +1,16 @@
 import axios from "axios";
-import fs from "fs";
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 //constants
-//classes
-class ZohoHeader {
-    constructor(accessToken) {
-        this["Content-Type"] = 'application/json';
-        this.Authorization = `Zoho-oauthtoken ${accessToken}`;
-    }
-}
+
 //get a refresh token
-export async function getZohoRefreshToken(authCode) {
-    //console.error('trying to get refresh token now. AuthCode: ' + authCode);
+export async function getZohoRefreshToken(authCode) { 
+    console.error(`[${new Date().toISOString()}] GetRefreshToken - trying now with ${authCode}`);
+    console.error(`[${new Date().toISOString()}] GetRefreshToken - trying now in folder ${process.cwd()}`);
     return new Promise((resolve, reject) => {
         const url = `https://accounts.zoho.com/oauth/v2/token?code=${authCode}&redirect_uri=http://localhost:3000/authRedirect&client_id=${process.env.ZOHO_CLIENT_ID}&client_secret=${process.env.ZOHO_CLIENT_SECRET}&grant_type=authorization_code`;
-        //console.error('trying ' + url);
+        console.error('trying ' + url);
         axios({
             method: 'POST',
             url: url
@@ -25,7 +22,7 @@ export async function getZohoRefreshToken(authCode) {
             else {
                 fs.writeFile('./data/refreshToken.txt', response.data.refresh_token, (err) => {
                 if (err) throw err;
-                    //console.error('Token written successfully!');
+                    console.error(`[${new Date().toISOString()}] GetRefreshToken - token written successfully`);
                 });
                 resolve(response.data.refresh_token);
             }
@@ -37,14 +34,15 @@ export async function getZohoRefreshToken(authCode) {
 //get a Zoho auth token
 export async function getZohoAccessToken() {
     return new Promise((resolve, reject) => {
-        fs.readFile('./data/refreshToken.txt', 'utf8', (err, refreshToken) => {
+        const filePath = path.join(process.cwd(), 'data', 'refreshToken.txt');
+        
+        fs.readFile(filePath, 'utf8', (err, refreshToken) => {
             if (err) {
                 console.error('No file found: ', err);
                 reject(err);
             }
-            //console.error('File content:', refreshToken);
+            console.error('File content:', refreshToken);
             const accessTokenURL = `https://accounts.zoho.com/oauth/v2/token?refresh_token=${refreshToken}&client_id=${process.env.ZOHO_CLIENT_ID}&client_secret=${process.env.ZOHO_CLIENT_SECRET}&grant_type=refresh_token`;
-
             try{
             //console.error(accessTokenURL);
              axios.post(accessTokenURL, {headers: {'Content-Type' : 'application/json' }})
