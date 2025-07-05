@@ -1,13 +1,13 @@
-# Zoho CRM MCP Server for Claude.ai
+# Zoho CRM Integration for Claude.ai
 
 An integration that connects Claude.ai to Zoho CRM, enabling seamless interaction with your CRM data through natural language queries. Uses the Model Context Protocol (MCP). Uses Zoho Oauth for a secure connection. 
 
 ## Features
-
+- **Ready-Only**: To keep your data clean, Claude will be Read-Only with respect to Zoho and cannot modify CRM records
 - **List Modules**: Get all available CRM modules and their API names
 - **Field Information**: Retrieve field details for any CRM module
 - **Search Records**: Search across CRM records using natural language
-- **Get Records**: Fetch specific records
+- **Get Records**: Fetch a specific record from any module
 - **More in Development**: more features coming 2025
 
 # Prerequisites
@@ -15,17 +15,13 @@ An integration that connects Claude.ai to Zoho CRM, enabling seamless interactio
 Before installing this MCP server, ensure you have the following installed on your system:
 
 ### Required Software
-
-1. **node.js and npm**
-   - **Windows/Mac**: Download offial installer at nodejs.org
-   - **Linux**: `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash` then `nvm install node`
-   - Verify installation: `node --version`
    
 1. **Docker or Docker Desktop**
    - **Windows/Mac**: Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
    - **Linux**: Install Docker Engine following the [official guide](https://docs.docker.com/engine/install/)
    - Verify installation: `docker --version`
 
+And that's it! The list of prerequisite software was kept as short as possible. The rest of the application will run inside of a Docker container. Now, you'll just need to setup Zoho Oauth credentials and configure Claude to connect to the MCP server.
 ### Zoho CRM Setup
 
 1. **Admin Access for Zoho CRM Account**
@@ -34,7 +30,7 @@ Before installing this MCP server, ensure you have the following installed on yo
 
 2. **Create Zoho OAuth ID and Secret**
    - Go to [Zoho Developer Console](https://api-console.zoho.com/)
-   - Create a new "Self Client" application
+   - Create a new "Server Application"
    - Set redirect URI to: `http://localhost:3000/authRedirect`
    - Note down your `Client ID` and `Client Secret`
 
@@ -44,7 +40,7 @@ Before installing this MCP server, ensure you have the following installed on yo
 
 1. **Clone the App Image**
    
-   In your terminal window, in any folder: 
+   For this step you'll need to briefly open your terminal window and type in a command to pull the application from Docker Hub. In your terminal window: 
    
    AMD/Intel chips:
    ```
@@ -55,19 +51,21 @@ Before installing this MCP server, ensure you have the following installed on yo
    docker pull whiteside1992daniel/zohocrm-mcpserver:m3
    ```
 2. **Verify the Image (Optional)**
+   
+   You can verify the application was downloaded if you're not sure it was successful.
    ```bash
    docker images | grep whiteside1992daniel/zohocrm-mcpserver
    ```
 
 ### Step 2: Configure Claude Desktop
 
-Now you need to make a modification to your Claude config file to tell Claude how to connect to the MCP Server.
+Now you need to make a modification to your Claude config file to tell Claude how to connect to the MCP Server. This is relatively simple once you find the file. 
 1. **Locate Claude Desktop Config File**
 You can open Claude Desktop and go to Preferences -> Developer -> Edit Config. This should open the file `claude_desktop_config.js`.
 
 2. **Add MCP Server Configuration**
    
-   Edit the `claude_desktop_config.json` file in a code or text editor and add the following configurations:
+   Edit the `claude_desktop_config.json` file in a code or text editor and add the following configurations to enable the MCP server connection:
    ```json
    {
      "mcpServers": {
@@ -75,7 +73,7 @@ You can open Claude Desktop and go to Preferences -> Developer -> Edit Config. T
           "command": "sh",
           "args": [
             "-c",
-            "docker run --rm -i --name zoho-mcp-server -p 3000:3000 -e ZOHO_CLIENT_ID -e ZOHO_CLIENT_SECRET -e SCOPES whiteside1992daniel/zohocrm-mcpserver:m3"
+            "docker run --rm -i --name zoho-mcp-server -p 3000:3000 -v zoho-mcp-data:/app/data -e ZOHO_CLIENT_ID -e ZOHO_CLIENT_SECRET -e SCOPES whiteside1992daniel/zohocrm-mcpserver:VERSION"
           ],
           "env": {
             "ZOHO_CLIENT_ID" : "YOURCLIENTID",
