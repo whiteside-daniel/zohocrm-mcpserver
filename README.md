@@ -106,10 +106,12 @@ You can open Claude Desktop and go to Preferences -> Developer -> Edit Config. T
 
 | Tool Name | Description | Parameters |
 |-----------|-------------|------------|
-| `authorize-zoho` | Generate OAuth authorization URL | None |
+| `validate-zoho-oauth` | Check if Oauth Refresh Token exists | None |
+| `setup-zoho-oauth` | Get Refresh Token | None |
 | `list-zoho-modules` | List all CRM modules | None |
 | `zoho-module-list-fields` | Get fields for a module | `module_api_name` |
-| `simple-search-zoho-records` | Search records | `searchModule`, `searchString` |
+| `simple-search-zoho-records` | Search records | `module_api_name`, `search_string` |
+| `count-zoho-records` | Count Records with filters | 'module_api_name`, `filter_type`, `search_string` |
 | `get-zoho-record` | Get record by ID | `id`, `moduleApiName` |
 
 ## Usage Examples
