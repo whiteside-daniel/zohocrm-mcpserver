@@ -8,6 +8,7 @@ console.error(`[${new Date().toISOString()}] Express Server - Node.js version: $
 console.error(`[${new Date().toISOString()}] Express Server - Process PID: ${process.pid}`);
 console.error(`[${new Date().toISOString()}] Express Server - trying now in folder ${process.cwd()}`);
 
+
 //START AN EXPRESS SERVER
 app.get('/authRedirect', (req, res) => {
     console.error('reached redirect auth');
@@ -16,7 +17,7 @@ app.get('/authRedirect', (req, res) => {
     try {
         console.error(`[${new Date().toISOString()}] Express Server - trying to get Refresh Token`);
         getZohoRefreshToken(authCode)
-        .then(token => {
+        .then(({token , path }) => {
             console.error('token acquired: ' + token);
             process.env.ZOHO_REFRESH_TOKEN = token;
             res.send('You can close this page now. Refresh token acquired.');

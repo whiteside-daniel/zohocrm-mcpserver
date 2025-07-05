@@ -205,6 +205,26 @@ Application logs can be found by going to Claude -> Preferences -> Developer. Wh
    - Use the "authorize-zoho" tool
    - Complete the authorization in your browser
    - Try searching for records
+   
+# Appendix - Commands
+
+## Manual Testing Node
+Config for Claude.ai in manual dev mode
+```
+"zohocrm-mcp-connector": {
+      "command": "sh",
+      "args": [
+        "-c",
+        "node /Users/whiteside/Documents/GitHub/zohocrm-mcpserver/express.js & node /Users/whiteside/Documents/GitHub/zohocrm-mcpserver/index.js"
+      ],
+      "env": {
+        "ZOHO_CLIENT_ID" : "1000.6ZAM3J05ETG46V9ZD1TNSJT7BTZ77A",
+        "ZOHO_CLIENT_SECRET" : "d09b76a006701550137cfa72240e804c21f2a69d96",
+        "SCOPES" : "ZohoCRM.settings.ALL,ZohoCRM.modules.ALL,ZohoSearch.securesearch.READ",
+        "NODE_ENV": "development"
+      }
+    }
+```
 
 # License
 
@@ -223,6 +243,7 @@ For issues and questions:
 - Check the troubleshooting section above
 - Review Zoho CRM API documentation
 - Open an issue in the repository
+- Email Daniel Whiteside
 
 ---
 

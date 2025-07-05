@@ -2,7 +2,17 @@ import axios from "axios";
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+
 //constants
+let tokenFilePath = '';
+if(process.env.NODE_ENV == 'development') {
+  tokenFilePath = process.env.DEV_TOKEN_PATH;
+  console.error(`development environment tokenFilePath: ${tokenFilePath}`);
+}
+else {
+  tokenFilePath = path.join(process.cwd(), 'data', 'refreshToken.txt');
+  console.error(`production environment tokenFilePath: ${tokenFilePath}`);
+}
 
 //get a refresh token
 export async function getZohoRefreshToken(authCode) { 
@@ -20,11 +30,11 @@ export async function getZohoRefreshToken(authCode) {
                 reject(response.data.error);
             }
             else {
-                fs.writeFile('./data/refreshToken.txt', response.data.refresh_token, (err) => {
+                fs.writeFile(tokenFilePath, response.data.refresh_token, (err) => {
                 if (err) throw err;
                     console.error(`[${new Date().toISOString()}] GetRefreshToken - token written successfully`);
                 });
-                resolve(response.data.refresh_token);
+                resolve({token: response.data.refresh_token , path: tokenFilePath });
             }
         })
         .catch(err => reject(err));
@@ -34,9 +44,8 @@ export async function getZohoRefreshToken(authCode) {
 //get a Zoho auth token
 export async function getZohoAccessToken() {
     return new Promise((resolve, reject) => {
-        const filePath = path.join(process.cwd(), 'data', 'refreshToken.txt');
         
-        fs.readFile(filePath, 'utf8', (err, refreshToken) => {
+        fs.readFile(tokenFilePath, 'utf8', (err, refreshToken) => {
             if (err) {
                 console.error('No file found: ', err);
                 reject(err);
@@ -178,6 +187,27 @@ export async function searchZohoRecords(accessToken, searchModule, searchString)
         return response.data.data;
     } catch(err) {
         //console.error(err);
+        return err;
+    }
+}
+
+export async function countZohoRecords(accessToken, moduleApiName, countType, searchString) {
+    const authHeaders = {'Content-Type' : 'application/json' , 'Authorization' : `Zoho-oauthtoken ${accessToken}`};
+    let url;
+    if(countType === 'total') {
+        url = `https://www.zohoapis.com/crm/v8/${moduleApiName}/actions/count`;
+    } else {
+        url = `https://www.zohoapis.com/crm/v8/${moduleApiName}/actions/count?${countType}=${searchString}`;
+    }
+    try {
+        const response = await axios({
+            method: 'GET',
+            url: url,
+            headers: authHeaders
+        });
+        return response.data;
+    } catch(err) {
+        console.error(err);
         return err;
     }
 }
