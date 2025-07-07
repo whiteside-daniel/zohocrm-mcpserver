@@ -90,7 +90,7 @@ You can open Claude Desktop and go to Preferences -> Developer -> Edit Config. T
    **Replace the placeholder values:**
    - ZOHO_CLIENT_ID : `YOURCLIENTID` - Your actual Zoho Client ID
    - ZOHO_CLIENT_SECRET : `YOURCLIENTSECRET` - Your actual Zoho Client Secret
-   - SCOPES : whiteside1992daniel/zohocrm-mcpserver:`VERSION` - Your version depending on your silicon [amd64 || m3]
+   - whiteside1992daniel/zohocrm-mcpserver:`VERSION` - Your version depending on your silicon [amd64 || m3]
 
 3. **Restart Claude Desktop**
    - Close Claude Desktop completely
