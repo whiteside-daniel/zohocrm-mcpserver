@@ -39,11 +39,11 @@ And that's it! The list of prerequisite software was kept as short as possible. 
 
 # Quick Installation
 
-### Step 1: Clone and Build Docker Image
+### Step 1: Pull the Docker Image
 
-1. **Clone the App Image**
-   
-   For this step you'll need to briefly open your terminal window and type in a command to pull the application from Docker Hub. In your terminal window: 
+In the Docker Desktop app, visit the Docker Hub tab, and search `whiteside1992daniel` or `whiteside1992daniel/zohocrm-mcpserver`. Find the `whiteside1992daniel/zohocrm-mcpserver` image, be sure to select `m3` for Apple Silicon or `amd64` for Intel and then download the image with the blue "Pull" button. 
+
+Alternatively, you can download the image manually via the terminal: 
    
    AMD/Intel chips:
    ```
@@ -53,12 +53,9 @@ And that's it! The list of prerequisite software was kept as short as possible. 
    ```
    docker pull whiteside1992daniel/zohocrm-mcpserver:m3
    ```
-2. **Verify the Image (Optional)**
-   
-   You can verify the application was downloaded if you're not sure it was successful.
-   ```bash
-   docker images | grep whiteside1992daniel/zohocrm-mcpserver
-   ```
+
+Then visit the Images tab to verify you have downloaded the image. 
+
 
 ### Step 2: Configure Claude Desktop
 
